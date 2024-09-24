@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using IDoContent.Models;
+using IDoContent.Data.Entity;
 
 namespace IDoContent.Data
 {
     public class  APIContext : DbContext
     {
-        public DbSet<ContentModel> Contents { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<HotWheels> HotWheels { get; set; }
 
         public APIContext(DbContextOptions<APIContext> options)
             :base (options) 

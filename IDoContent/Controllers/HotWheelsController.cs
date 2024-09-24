@@ -5,17 +5,11 @@ using IDoContent.Data.Entity;
 
 namespace IDoContent.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class ContentController : ControllerBase
+
+    public class HotWheelsController(APIContext context) : BaseController
     {
          
-        private readonly APIContext _context;
-
-        public ContentController(APIContext context)
-        {
-            _context = context;
-        }
+        private readonly APIContext _context = context;
 
         // Create/Edit
         [HttpPost]
@@ -60,7 +54,7 @@ namespace IDoContent.Controllers
             _context.Contents.Remove(result);
             _context.SaveChanges();
 
-            return new JsonResult(NoContent());  
+            return new JsonResult(Ok());  
         }
 
         //Get All
