@@ -9,8 +9,8 @@ namespace IDoContent.Data
 
         public APIContext(DbContextOptions<APIContext> options)
             :base (options) 
-        { 
-        
+        {
+            Database.EnsureCreated();
         }
 
     }

@@ -9,25 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddDbContext<APIContext>(opt => opt.UseInMemoryDatabase("ContentDB"));
 builder.Services.AddDbContext<APIContext>(options =>
 {
-    options.UseSqlServer("Server=aorus;Database=ContentDB;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer("Server=104.247.167.130\\MSSQLSERVER2022;Database=sezerala_api;User Id=sezerala_api;Password=Bzs2p582@;TrustServerCertificate=True");
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+ 
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+ 
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
