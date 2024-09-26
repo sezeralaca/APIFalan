@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using IDoContent.Data;
+﻿using IDoContent.Data;
 using IDoContent.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IDoContent.Controllers
 {
@@ -9,7 +9,7 @@ namespace IDoContent.Controllers
     [ApiController]
     public class ContentController : ControllerBase
     {
-         
+
         private readonly APIContext _context;
 
         public ContentController(APIContext context)
@@ -21,18 +21,18 @@ namespace IDoContent.Controllers
         [HttpPost]
         public JsonResult CreateEdit(Content content)
         {
-            if(content.Id == 0) 
+            if (content.Id == 0)
             {
                 _context.Contents.Add(content);
             }
-            else 
+            else
             {
                 var contentInDB = _context.Contents.Find(content.Id);
-                if(contentInDB == null)
+                if (contentInDB == null)
                     return new JsonResult(NotFound());
 
-                    contentInDB = content;
-                
+                contentInDB = content;
+
             }
 
             _context.SaveChanges();
@@ -40,10 +40,10 @@ namespace IDoContent.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get(int id) 
+        public JsonResult Get(int id)
         {
-        var result = _context.Contents.Find(id);
-            if(result==null)
+            var result = _context.Contents.Find(id);
+            if (result == null)
                 return new JsonResult(NotFound());
 
             return new JsonResult(Ok(result));
@@ -60,13 +60,14 @@ namespace IDoContent.Controllers
             _context.Contents.Remove(result);
             _context.SaveChanges();
 
-            return new JsonResult(NoContent());  
+            return new JsonResult(NoContent());
         }
 
         //Get All
-
+        [Authorize]
         [HttpGet()]
-        public JsonResult GetAll() {
+        public JsonResult GetAll()
+        {
 
             var result = _context.Contents.ToList();
             return new JsonResult(Ok(result));
@@ -75,7 +76,7 @@ namespace IDoContent.Controllers
         public JsonResult GetFiltered()
         {
 
-            var result = _context.Contents.ToList().Where(f=>f.ContentCategory== "Yazılım");
+            var result = _context.Contents.ToList().Where(f => f.ContentCategory == "Yazılım");
             return new JsonResult(Ok(result));
         }
     }

@@ -11,6 +11,6 @@ namespace IDoContent.Data.Entity
         public string ContentDescription { get; set; }
         public string ContentCategory { get; set; }
         public string MainContent { get; set; }
-        public int ContentDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }
